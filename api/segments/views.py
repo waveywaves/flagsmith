@@ -1,6 +1,7 @@
 import logging
 
 from core.permissions import HasMasterAPIKey
+from core.throttling import MutationRequestThrottleViewMixin
 from django.utils.decorators import method_decorator
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
@@ -45,7 +46,7 @@ logger = logging.getLogger()
         ]
     ),
 )
-class SegmentViewSet(viewsets.ModelViewSet):
+class SegmentViewSet(MutationRequestThrottleViewMixin, viewsets.ModelViewSet):
     serializer_class = SegmentSerializer
     permission_classes = [SegmentPermissions | MasterAPIKeySegmentPermissions]
     pagination_class = CustomPagination

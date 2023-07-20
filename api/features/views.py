@@ -7,6 +7,7 @@ from app_analytics.influxdb_wrapper import get_multiple_event_list_for_feature
 from core.constants import FLAGSMITH_UPDATED_AT_HEADER
 from core.permissions import HasMasterAPIKey
 from core.request_origin import RequestOrigin
+from core.throttling import MutationRequestThrottleViewMixin
 from django.conf import settings
 from django.core.cache import caches
 from django.db.models import Q, QuerySet
@@ -97,7 +98,7 @@ def get_feature_by_uuid(request, uuid):
     name="list",
     decorator=swagger_auto_schema(query_serializer=FeatureQuerySerializer()),
 )
-class FeatureViewSet(viewsets.ModelViewSet):
+class FeatureViewSet(MutationRequestThrottleViewMixin, viewsets.ModelViewSet):
     permission_classes = [FeaturePermissions | MasterAPIKeyFeaturePermissions]
     pagination_class = CustomPagination
 
