@@ -48,7 +48,7 @@ from features.versioning.exceptions import FeatureVersioningError
 from metadata.models import Metadata
 from projects.models import IdentityOverridesV2MigrationStatus, Project
 from segments.models import Segment
-from util.mappers import map_environment_to_environment_document
+from util.mappers import map_environment_to_sdk_document
 from webhooks.models import AbstractBaseExportableWebhookModel
 
 logger = logging.getLogger(__name__)
@@ -370,7 +370,7 @@ class Environment(
         api_key: str,
     ) -> dict[str, typing.Any]:
         environment = cls.objects.filter_for_document_builder(api_key=api_key).get()
-        return map_environment_to_environment_document(environment)
+        return map_environment_to_sdk_document(environment)
 
     def _get_environment(self):
         return self
