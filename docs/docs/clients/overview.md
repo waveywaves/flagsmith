@@ -343,12 +343,10 @@ serverless platforms.
 The benefit of running in Local Evaluation mode is that you can process flag evaluations much more efficiently as they
 are all computed locally.
 
-- Identities and their Traits are **not** read from or written to the Flagsmith API, and so are not persisted in the
-  datastore. This means that you have to provide the full complement of Traits when requesting the Flags for a
-  particular Identity. Our SDKs all provide relevant methods to achieve this.
-- [Identity overrides](../basic-features/managing-identities#identity-overrides) do not operate at all.
+- Identities are _not_ sent to the API and so are not persisted in the datastore.
+- Because Local mode does not connect to the datastore for each Flag request, it is not able to read the Trait data of
+  Identities from the API. This means that you have to provide the full complement of Traits when requesting the Flags
+  for a particular Identity. Our SDKs all provide relevant methods to achieve this.
 - [Analytics-based Integrations](/integrations/overview#analytics-platforms) do not run.
   [Flag Analytics](/advanced-use/flag-analytics) do still work, if enabled within the
   [SDK setup](/clients/server-side#configuring-the-sdk).
-- In circumstances where you need to target a specific identity, you can do this by creating a segment to target that
-  specific user and subsequently adding a segment override for that segment.
